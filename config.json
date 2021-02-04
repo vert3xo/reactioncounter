@@ -1,0 +1,7 @@
+{
+    "colors": {
+        "normal": "#66cccc",
+        "error": "#800000",
+        "success": "#7CFC00"
+    }
+}
