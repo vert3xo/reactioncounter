@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "better-sqlite3": "^7.1.2",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "name": "ReactionCounterBot",
+  "version": "1.0.0",
+  "description": "Simple Discord bot to count reactions",
+  "main": "index.js",
+  "author": "Vert3xo",
+  "license": "MIT"
+}
