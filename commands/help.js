@@ -7,7 +7,7 @@ exports.settings = {
     name: "help",
     usage: "help [command]",
     examples: ["help help"],
-    description: "Help with commands.",
+    description: "Pomoc s príkazmi.",
 };
 
 exports.execute = async (client, message, args) => {
@@ -19,12 +19,15 @@ exports.execute = async (client, message, args) => {
     if (args[0] === null || args[0] === "" || args[0] === undefined) {
         const embed = await new MessageEmbed()
             .setTitle("Help")
-            .setDescription(`Available commands:\n\`${commands.join("\n")}\``)
+            .setDescription(`Dostupné príkazy:\n\`${commands.join("\n")}\``)
             .setColor(config.colors.normal);
         message.author.send(embed);
     } else {
         if (commands.indexOf(args[0]) <= -1) {
-            complexError(message.author, "No help available for this command.");
+            complexError(
+                message.author,
+                "Pre tento príkaz nie je dostupná žiadna pomoc."
+            );
             if (message.channel.type !== "dm") {
                 message.delete();
             }
@@ -35,9 +38,9 @@ exports.execute = async (client, message, args) => {
             .setTitle(`Help ${args[0]}`)
             .setDescription(
                 `${command.settings.description}\n
-                Usage: \n\`${
+                Použitie: \n\`${
                     command.settings.usage
-                }\`\n\nExample: \n\`${command.settings.examples.join("\n")}\``
+                }\`\n\nPríklad: \n\`${command.settings.examples.join("\n")}\``
             )
             .setColor(config.colors.normal);
         message.author.send(embed);

@@ -8,14 +8,14 @@ exports.settings = {
     name: "addevent",
     usage: "addevent [message]",
     examples: ["addevent Among Us o 20:00", "addevent Valorant o 17:00"],
-    description: "Creates an event",
+    description: "Vytvorí oznámenie.",
 };
 
 exports.execute = async (client, message, args) => {
     if (args[0] === null || args[0] === "" || args[0] === undefined) {
         complexError(
             message.author,
-            `Missing arguments, use \`${process.env.COMMAND_PREFIX}help ${this.settings.name}\`.`
+            `Chýbajúce argumenty, použi \`${process.env.COMMAND_PREFIX}help ${this.settings.name}\` pre pomoc.`
         );
         if (message.channel.type !== "dm") {
             message.delete();
@@ -26,9 +26,9 @@ exports.execute = async (client, message, args) => {
     if (args.join(" ").length > 255) {
         complexError(
             message.author,
-            `Maximum number of characters allowed is 255, your message if ${
+            `Maximálny počet znakov je 255, tvoja správa má ${
                 args.join(" ").length
-            } characters long.`
+            } znakov.`
         );
         if (message.channel.type !== "dm") {
             message.delete();
@@ -42,8 +42,8 @@ exports.execute = async (client, message, args) => {
     );
 
     const embed = await new MessageEmbed()
-        .setTitle("Event")
-        .setDescription(`**${args.join(" ")}**`)
+        .setTitle("Hlasovanie")
+        .setDescription(`**@everyone ${args.join(" ")}**`)
         .setColor(config.colors.normal);
     message.channel.send(embed).then(async (m) => {
         insert.run(
@@ -56,9 +56,13 @@ exports.execute = async (client, message, args) => {
         await m.react("👎");
     });
 
+    if (message.channel.type !== "dm") {
+        message.delete();
+    }
+
     const id = await new MessageEmbed()
-        .setTitle("Event Identified")
-        .setDescription(`Identifier: ${eventId}`)
+        .setTitle("Event Identifir")
+        .setDescription(`Identifier: \`${eventId}\``)
         .setColor(config.colors.success);
     message.author.send(id);
 };

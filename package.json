@@ -1,10 +1,11 @@
 {
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "better-sqlite3": "^7.1.2",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "nodemon": "^2.0.7",
     "uuid": "^8.3.2"
   },
   "scripts": {
@@ -16,5 +17,8 @@
   "description": "Simple Discord bot to count reactions",
   "main": "index.js",
   "author": "Vert3xo",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }

@@ -7,10 +7,14 @@ exports.settings = {
     name: "endevent",
     usage: "endevent [uuid]",
     examples: ["endevent 69adb819-e160-4e1a-a918-6d36706c153e"],
-    description: "Ends the event and tells you who reacted to it.",
+    description: "Ukončí hlasovanie, spočíta a vypíše hlasy.",
 };
 
 exports.execute = async (client, message, args) => {
+    if (message.channel.type === "dm") {
+        complexError(message.author, "Hlasovania sa nedá ukončiť cez DM");
+        return;
+    }
     if (args[0] === null || args[0] === "" || args[0] === undefined) {
         complexError(
             message.author,
@@ -24,12 +28,18 @@ exports.execute = async (client, message, args) => {
     var stmt = db.prepare("SELECT * FROM events WHERE id=?").bind(args[0]);
 
     if (stmt.get() === undefined) {
-        complexError(message.author, "Invalid event identifier!");
+        complexError(message.channel, "Nesprávny identifikátor.");
         return;
     }
 
-    if (stmt.get().owner !== message.author.id) {
-        complexError(message.author, "You can't end this event!");
+    if (
+        stmt.get().owner !== message.author.id &&
+        !message.member.hasPermission("ADMINISTRATOR")
+    ) {
+        complexError(
+            message.channel,
+            "Toto hlasovanie nemôžeš ukončiť, ukončit hlasovania môže iba admin alebo ten, čo ich vytvoril."
+        );
         return;
     }
 
@@ -51,15 +61,15 @@ exports.execute = async (client, message, args) => {
     });
 
     const embed = new MessageEmbed()
-        .setTitle("Event voting ended")
+        .setTitle("Hlasovanie ukončené")
         .setDescription(
             `👍:\n${
                 usersReactedYes.length === 0
-                    ? "Nobody"
+                    ? "Nikto"
                     : usersReactedYes.join(", ")
             }\n\n👎:\n${
                 usersReactedNo.length === 0
-                    ? "Nobody"
+                    ? "Nikto"
                     : usersReactedNo.join(", ")
             }`
         )

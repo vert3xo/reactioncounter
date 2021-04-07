@@ -3,10 +3,17 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const complexError = require("./errors/complexError");
 const fs = require("fs");
+require("./express")(client);
 
 const botToken = process.env.TOKEN;
 
 client.on("ready", () => {
+    client.user.setPresence({
+        activity: {
+            name: `this server, use ${process.env.COMMAND_PREFIX}help`,
+            type: "WATCHING",
+        },
+    });
     console.log(`Logged in as ${client.user.tag}`);
 });
 
@@ -29,10 +36,10 @@ client.on("message", (msg) => {
         } else {
             complexError(
                 msg.author,
-                `Unknown command, use \`${process.env.COMMAND_PREFIX}help\` to see all available commands.`
+                `Neznámy príkaz, použi \`${process.env.COMMAND_PREFIX}help\` pre zobrazenie dostupných príkazov.`
             );
-            if (message.channel.type !== "dm") {
-                message.delete();
+            if (msg.channel.type !== "dm") {
+                msg.delete();
             }
         }
     }
