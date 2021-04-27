@@ -22,6 +22,16 @@ fs.readdirSync("./commands").forEach((file) => {
     commands.push(file.split(".")[0]);
 });
 
+client.on("guildMemberAdd", (member) => {
+    var guild = member.guild.members.guild;
+    guild.roles.cache.forEach((role) => {
+        if (role.name === "Members") {
+            member.roles.add(role);
+            return;
+        }
+    });
+});
+
 client.on("message", (msg) => {
     if (msg.content.startsWith(process.env.COMMAND_PREFIX)) {
         const command = msg.content

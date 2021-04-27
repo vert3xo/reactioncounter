@@ -54,6 +54,7 @@ exports.execute = async (client, message, args) => {
         );
         await m.react("👍");
         await m.react("👎");
+        await m.react("🤷");
     });
 
     if (message.channel.type !== "dm") {
@@ -61,7 +62,7 @@ exports.execute = async (client, message, args) => {
     }
 
     const id = await new MessageEmbed()
-        .setTitle("Event Identifir")
+        .setTitle("Event Identifier")
         .setDescription(`Identifier: \`${eventId}\``)
         .setColor(config.colors.success);
     message.author.send(id);

@@ -49,6 +49,7 @@ exports.execute = async (client, message, args) => {
 
     var usersReactedYes = [];
     var usersReactedNo = [];
+    var usersReactedMaybe = [];
 
     await eventMessage.reactions.cache.get("👍").users.cache.forEach((user) => {
         if (user.id !== client.user.id)
@@ -58,6 +59,11 @@ exports.execute = async (client, message, args) => {
     await eventMessage.reactions.cache.get("👎").users.cache.forEach((user) => {
         if (user.id !== client.user.id)
             usersReactedNo.push(client.users.cache.get(user.id).username);
+    });
+
+    await eventMessage.reactions.cache.get("🤷").users.cache.forEach((user) => {
+        if (user.id !== client.user.id)
+            usersReactedMaybe.push(client.users.cache.get(user.id).username);
     });
 
     const embed = new MessageEmbed()
@@ -71,6 +77,10 @@ exports.execute = async (client, message, args) => {
                 usersReactedNo.length === 0
                     ? "Nikto"
                     : usersReactedNo.join(", ")
+            }\n\n🤷:\n${
+                usersReactedMaybe.length === 0
+                    ? "Nikto"
+                    : usersReactedMaybe.join(", ")
             }`
         )
         .setColor(config.colors.normal);

@@ -38,7 +38,7 @@ exports.execute = async (client, message, args) => {
 
     data.forEach((event) => {
         events.push(
-            `Identifier: ${event.id}\nOwner ID: ${event.owner}\nMessage ID: ${event.message_id}\nMessage: ${event.message}`
+            `Identifier: \`${event.id}\`\nOwner ID: \`${event.owner}\`\nMessage ID: \`${event.message_id}\`\nMessage: \`${event.message}\``
         );
     });
 
